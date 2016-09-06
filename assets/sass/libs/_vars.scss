@@ -1,0 +1,48 @@
+// skel-baseline v3.0.1 | (c) n33 | skel.io | MIT licensed
+
+// Misc.
+	$misc: (
+		z-index-base:		10000,
+		slider-align:       'left',
+	);
+
+// Duration.
+	$duration: (
+		nav:				0.5s,
+		transition:			0.2s
+	);
+
+// Size.
+	$size: (
+		preview-slide-size: (
+			width: 320px,
+			height: 260px
+		),
+		border-radius:		4px,
+		border-width:		1px,
+		element-height:		2.75em,
+		element-margin:		1.5rem
+	);
+
+// Font.
+	$font: (
+		family:				(Helvetica, Arial, sans-serif),
+		family-fixed:		('Courier New', monospace),
+		weight:				normal,
+		weight-bold:		bold,
+
+		headers: (
+			family: 		('HelveticaNeueCyr', Arial, sans-serif)
+		)
+	);
+
+// Palette.
+	$palette: (
+		bg:					#fff,
+		fg:					#2e2e2e,
+		fg-bold:			#555,
+		fg-light:			#bbb,
+		accent: 			#b18d53,
+		border:  			#f4f4f4,
+		border2:  			#d7c6aa
+	);
