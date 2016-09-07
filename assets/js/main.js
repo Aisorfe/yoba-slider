@@ -2,7 +2,7 @@ var slider = (function($) {
 
     var _ = {
 
-        class_names: {
+        cls: {
 
             viewer: ['viewer', '.viewer'],
 
@@ -50,15 +50,19 @@ var slider = (function($) {
 
             console.log('...init properties');
 
+            // elements
             _.$window = $(window);
             _.$body = $('body');
-            _.$viewer = $(_.class_names.viewer[1]);
-            _.$slides_wrapper = $(_.class_names.slides_wrapper[1]);
-            _.$slide = $(_.class_names.slide[1]);
+            _.$viewer = $(_.cls.viewer[1]);
+            _.$slides_wrapper = $(_.cls.slides_wrapper[1]);
+            _.$slide = $(_.cls.slide[1]);
             _.$num_of_slides = _.$slide.length;
-            _.$toggle = _.$viewer.find(_.class_names.toggle[1]);
-            _.$navNext = _.$viewer.find(_.class_names.nav_next[1]);
-            _.$navPrevious = _.$viewer.find(_.class_names.nav_previous[1]);
+            _.$toggle = _.$viewer.find(_.cls.toggle[1]);
+            _.$navNext = _.$viewer.find(_.cls.nav_next[1]);
+            _.$navPrevious = _.$viewer.find(_.cls.nav_previous[1]);
+
+            // other
+            _.scroll_enabled = true;
 
         },
 
@@ -79,16 +83,16 @@ var slider = (function($) {
                         loaded: false
                     };
 
-                    slide.$content = $('<div class="' +  _.class_names.slide_content[0] + '"></div>')
+                    slide.$content = $('<div class="' +  _.cls.slide_content[0] + '"></div>')
                         .appendTo($this);
 
-                    slide.$caption = $('<div class="' +  _.class_names.slide_caption[0] + '"></div>')
+                    slide.$caption = $('<div class="' +  _.cls.slide_caption[0] + '"></div>')
                         .append(slide.$caption_data)
-                        .appendTo($this.children(_.class_names.slide_content[1]));
+                        .appendTo($this.children(_.cls.slide_content[1]));
 
-                    slide.$text = $('<div class="' +  _.class_names.slide_text[0] + '"></div>')
+                    slide.$text = $('<div class="' +  _.cls.slide_text[0] + '"></div>')
                         .append(slide.$text_data)
-                        .appendTo($this.children(_.class_names.slide_content[1]));
+                        .appendTo($this.children(_.cls.slide_content[1]));
 
                     $this.css('background-image', 'url(' + slide.$image_data + ')');
 
@@ -108,6 +112,8 @@ var slider = (function($) {
 
                 if (_.$viewer.hasClass('viewer--zoom-out')) {
 
+                    _.scroll_enabled = false;
+                    _.$body.css({ overflow: 'hidden' });
                     _.$current_slide = $(this);
                     $(this).addClass('current');
                     _.zoom('in');
@@ -116,31 +122,53 @@ var slider = (function($) {
 
             });
 
-            $(_.class_names.nav_next[1]).click(function() {
-
-                if (_.$viewer.hasClass('is-loading') || 
-                    _.$current_slide.index() == _.$num_of_slides - 1) {
-
+            $(_.cls.nav_next[1]).click(function() {
+                if (_.$viewer.hasClass('is-loading') || _.$current_slide.index() == _.$num_of_slides - 1) {
                     return;
-
                 }
-
                 _.switch('next');
-
             });
 
-            $(_.class_names.nav_previous[1]).click(function() {
-
-                if (_.$viewer.hasClass('is-loading') || 
-                    _.$current_slide.index() == 0) {
-
+            $(_.cls.nav_previous[1]).click(function() {
+                if (_.$viewer.hasClass('is-loading') || _.$current_slide.index() == 0) {
                     return;
+                }
+                _.switch('previous');
+            });
+
+            $(_.cls.toggle[1]).click(function() {
+                _.zoom('out');
+            });
+
+            _.set_mouse_scrolling();
+
+        },
+
+        set_mouse_scrolling: function() {
+
+            var delta = 0;
+
+            _.$slide.on('mousemove', function(e) {
+                delta = (e.clientX - window.innerWidth / 2) * 0.05;
+            });
+
+            _.$slide.on('mouseleave blur', function() {
+                delta = 0;
+            });
+
+            (function f() {
+
+                if (delta && _.scroll_enabled) {
+
+                    _.$window.scrollLeft(function(i, v) {
+                        return v + delta;
+                    });
 
                 }
 
-                _.switch('previous');
+                webkitRequestAnimationFrame(f);
 
-            });
+            })();
 
         },
 
@@ -160,7 +188,9 @@ var slider = (function($) {
 
             }
 
-            _.animate_offset(_.$current_slide.index() + i, function() {
+            var offset = (_.$current_slide.index() + i) * -100 + 'vw';
+
+            _.animate_offset(offset, function() {
 
                 var new_current = _.$slides_wrapper.children().eq(_.$current_slide.index() + i);
                 _.animate_slide_content(new_current, 'appear');
@@ -176,9 +206,11 @@ var slider = (function($) {
 
             if (mode == 'in') {
 
-                _.animate_offset(_.$current_slide.index());
-                _.animate_slides_size('100vw', '100vh');
+                var scroll = _.$window.scrollLeft() * 100 / document.documentElement.clientWidth;
+                var offset = _.$current_slide.index() * -100 + scroll + 'vw';
 
+                _.animate_offset(offset);
+                _.animate_slides_size('100vw', '100vh');
                 _.$viewer.removeClass('viewer--zoom-out');
 
             }
@@ -188,7 +220,7 @@ var slider = (function($) {
         animate_offset: function(offset, callback) {
 
             _.$viewer.animate({ 
-                marginLeft: -offset * 100 + 'vw'
+                marginLeft: offset
             }, {
                 duration: _.settings.zoom_time,
                 easing: _.settings.zoom_easing,
@@ -223,16 +255,16 @@ var slider = (function($) {
             if (mode == 'appear') {
 
                 o = 1;
-                t = '-40px';
+                t = '0';
 
             } else if (mode == 'disappear') {
 
                 o = 0;
-                t = 0;
+                t = '40px';
 
             }
 
-            slide.children(_.class_names.slide_content[1]).animate({
+            slide.children(_.cls.slide_content[1]).animate({
                 opacity: o,
                 top: t
             }, {

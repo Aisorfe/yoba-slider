@@ -1,0 +1,137 @@
+body {
+    background: rgba(0, 0, 0, .9);
+}
+
+.nav {
+    position: fixed;
+    z-index: _misc(z-index-base) + 1;
+    opacity: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    &__toggle {
+        position: relative;
+        top: 100%;
+
+        margin: -50px auto;
+        width: 20px;
+
+        font-size: 20px;
+        line-height: 1;
+
+        cursor: pointer;
+    }
+
+    &__toggle, &__previous, &__next {
+        cursor: pointer;
+        pointer-events: visible;
+    }
+
+    &__previous, &__next {
+        position: absolute;
+        top: 50%;
+
+        margin-top: -25px;
+
+        font-size: 50px;
+    }
+
+    &__previous {
+        margin-left: .4em;
+    }
+
+    &__next {
+        right: 0;
+        margin-right: .4em;
+    }
+
+}
+
+.viewer {
+    font-family: 'Sanchez';
+    font-size: 16px;
+
+    &__slides-wrapper {
+        height: 100vh;
+
+        @include display-flex;
+        @include align-items(center);
+        @include justify-content( if(_misc(slider-align) == 'right', flex-end, flex-start) );
+    }
+
+    &__slide {
+        display: inline-block;
+        @include flex-shrink(0);
+        width: 100vw;
+        height: 100vh;
+
+        background: grey;
+        background-position: center;
+
+        cursor: default;
+        @include clearfix;
+    }
+
+    &__slide-content {
+        position: relative;
+        top: 40px;
+
+        @include display-flex;
+        @include flex-direction(column);
+        @include justify-content(center);
+        opacity: 0;
+        width: 500px;
+        margin: 280px auto;
+
+        color: #fff;
+
+        text-align: center;
+    }
+
+    &__slide-caption {
+        font-size: 50px;
+        line-height: 1;
+        margin-bottom: _size(element-margin);
+    }
+
+    &.viewer--zoom-out {
+
+        .viewer__slide {
+            position: relative;
+            width: _size(preview-slide-size, width);
+            height: _size(preview-slide-size, height);
+            background-size: 150% auto;
+            cursor: pointer;
+
+            &::after {
+                position: absolute;
+                top: 0;
+                left: 0;
+
+                display: block;
+                width: 100%;
+                height: 100%;
+
+                background-color: rgba(0, 0, 0, .4);
+
+                content: '';
+
+                @include transition(background-color .6s cubic-bezier(0.215, 0.61, 0.355, 1));
+            }
+
+            &:hover {
+
+                &::after {
+                    background: transparent;
+                }
+            }
+        }
+
+        .viewer__nav {
+            display: none;
+        }
+    }
+}

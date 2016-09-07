@@ -1644,7 +1644,7 @@ body {
 }
 
 .nav {
-  position: absolute;
+  position: fixed;
   z-index: 10001;
   opacity: 0;
   width: 100%;
@@ -1683,7 +1683,6 @@ body {
   font-size: 16px;
 }
 .viewer__slides-wrapper {
-  overflow: hidden;
   height: 100vh;
   display: -webkit-flex;
   display: flex;
@@ -1706,6 +1705,13 @@ body {
 }
 .viewer__slide-content {
   position: relative;
+  top: 40px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  justify-content: center;
   opacity: 0;
   width: 500px;
   margin: 280px auto;
