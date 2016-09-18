@@ -179,16 +179,12 @@ var slider = (function($) {
             var i;
 
             if (direction == 'next') {
-
                  i = 1;
- 
             } else if (direction == 'previous') {
-
                  i = -1;
-
             }
 
-            var offset = (_.$current_slide.index() + i) * -100 + 'vw';
+            var offset = (_.$current_slide.index() + i) * -100 + (_.$window.scrollLeft() * 100 / document.documentElement.clientWidth) + 'vw';
 
             _.animate_offset(offset, function() {
 
