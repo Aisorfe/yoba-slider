@@ -1,53 +1,93 @@
 <!DOCTYPE HTML>
 
 <html>
+
+
   <head>
     <title>Image Slider</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/main.css" />
   </head>
+
+
   <body class="is-loading">
 
-    <div class="nav">
-      <div class="nav__toggle">
-        <i class="fa fa-th-large" aria-hidden="true"></i>
-      </div>
-      <div class="nav__previous">
-        <i class="fa fa-angle-left" aria-hidden="true"></i>
-      </div>
-      <div class="nav__next">
-        <i class="fa fa-angle-right" aria-hidden="true"></i>
-      </div>
-    </div>
+    <div class="slider zoomed-out">
 
-    <div class="viewer viewer--zoom-out">
-      <div class="viewer__slides-wrapper">
-        <div class="viewer__slide" data-image="images/1.jpg"
-                                   data-caption="True Detective"
-                                   data-text="A bizarre murder brings together three law-enforcement officers and a career criminal, each of whom must navigate a web of conspiracy and betrayal in the scorched landscapes of California.">
+      <div class="nav">
+
+        <div class="sidebar left">
+          <div class="preview">
+            <p class="switch prev">Previous slide</p>
+          </div>
+          <div class="all-slides">
+            <div class="icon">
+              <div class="sq"></div>
+              <div class="sq"></div>
+              <div class="sq"></div>
+              <div class="sq"></div>
+            </div>
+          </div>
+          <p class="see-all">See all slides</p>
         </div>
-        <div class="viewer__slide" data-image="images/2.jpg"
-                                   data-caption="Lorem ipsum dolor sit."
-                                   data-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et unde sapiente officiis expedita nihil quidem totam necessitatibus, aperiam, qui! Porro recusandae nam ullam dolor culpa eligendi, sequi repellendus. Voluptatibus, modi?">
-        </div> 
-        <div class="viewer__slide" data-image="images/3.jpg"
-                                   data-caption="Lorem ipsum dolor sit amet."
-                                   data-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum distinctio, earum asperiores ullam fugiat architecto nostrum totam tenetur molestias corporis!">
+
+        <div class="sidebar right">
+          <div class="all-slides">
+            <div class="icon">
+              <div class="sq"></div>
+              <div class="sq"></div>
+              <div class="sq"></div>
+              <div class="sq"></div>
+            </div>
+          </div>
+          <p class="see-all">See all slides</p>
+          <div class="preview">
+            <p class="switch next">Next slide</p>
+          </div>
         </div>
-        <div class="viewer__slide" data-image="images/4.jpg"
-                                   data-caption="Lorem ipsum dolor sit amet, consectetur."
-                                   data-text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem at accusantium recusandae ad quidem quia optio atque harum modi, ut in expedita id officia quis?">
+
+        <div class="previous">
+          <div class="arrow"></div>
+          <div class="circle"></div>
         </div>
-        <div class="viewer__slide" data-image="images/5.jpg"
-                                   data-caption=""
-                                   data-text="">
+
+        <div class="next">
+          <div class="arrow"></div>
+          <div class="circle"></div>
         </div>
-        <div class="viewer__slide" data-image="images/6.jpg"
-                                   data-caption=""
-                                   data-text="">
+
+      </div>
+
+      <div class="viewer">
+        <div class="slides-wrapper">
+          <div class="slide" data-image="images/1.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div>
+          <div class="slide" data-image="images/2.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div> 
+          <div class="slide" data-image="images/3.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div>
+          <div class="slide" data-image="images/4.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div>
+          <div class="slide" data-image="images/5.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div>
+          <div class="slide" data-image="images/6.jpg"
+                                     data-caption=""
+                                     data-text="">
+          </div>
         </div>
       </div>
+
     </div>
 
   </body>
